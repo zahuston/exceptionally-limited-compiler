@@ -2,7 +2,7 @@
   lexer goal take syntax --> tokens
   if 5==4:
     print("hello")
-  [if, num:5, comp_eql, num:4, func(print), quote_start, string:hello, quote_end]  
+  [if, num:5, comp_eql, num:4, colon, var:print, quote_start, string:hello, quote_end]  
   todo
   - identify token types
   - write lexer function to convert

@@ -2,6 +2,15 @@ import unittest
 from main.py import Lexer
 
 # https://docs.python.org/3/library/unittest.html
+'''
+    individual token tests
+    - entire number
+    - entire string
+    combined token tests
+    - 5==4
+    - print("hello") --> 
+    spacing is removed
+'''
 class TestLexer(unittest.TestCase):
   def multiple_number_input_comes_out_as_1_token(self):
       # arrange
