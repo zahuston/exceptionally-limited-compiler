@@ -9,6 +9,9 @@ class Lexer:
         if len(code) <= 0:
             raise Exception("Gotta give me something to work with in this file")
 
+        if code[len(code) - 1] != '\n':
+            raise Exception("File must end on a new line")
+
         self.position = Position(0, 0, code[0])
         self.code = code
         self.code_index = 0
