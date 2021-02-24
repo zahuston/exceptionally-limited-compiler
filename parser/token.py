@@ -18,6 +18,8 @@ class Token:
     def __repr__(self):
         return f'Token(type={self.type}, value = {self.value})'
 
+    def __eq__(self, obj):
+        return isinstance(obj, Token) and obj.type == self.type and obj.value == self.value
 
 class ControlToken(Token):
     @staticmethod
