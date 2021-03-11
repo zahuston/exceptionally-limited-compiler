@@ -32,7 +32,7 @@ class Test_Lexer(unittest.TestCase):
         self.assertListEqual(actual, expected)
 
     def test_multiple_string_inputs_comes_out_as_2_token(self):
-        actual = Lexer(""""abc" 'xyz"\n""").tokenize()
+        actual = Lexer(""""abc" "xyz"\n""").tokenize()
         expected = [Token(type="String", value = "abc"), Token(type="String", value = "xyz")]
         self.assertListEqual(actual, expected)
 
@@ -69,6 +69,7 @@ class Test_Lexer(unittest.TestCase):
         expected = [Token(type="Variable", value = "testVariableA"), Token(type="Variable", value = "testVariableB")]
         self.assertListEqual(actual, expected)
 
+    # variables
     def test_single_alphanumeric_variables(self):
         actual = Lexer("""testVariable1\n""").tokenize()
         expected = [Token(type="Variable", value = "testVariable1")]
@@ -118,18 +119,18 @@ class Test_Lexer(unittest.TestCase):
     # WhiteSpace
     def test_multiple_spaces_between_tokens_are_removed(self):
         actual = Lexer("""1    3\n""").tokenize()
-        expected = [Token(type="Int", value = 1), Token(type="Int", value = "3")]
+        expected = [Token(type="Int", value = 1), Token(type="Int", value = 3)]
         self.assertEqual(actual, expected)
 
     def test_tabs_between_tokens_are_removed(self):
         actual = Lexer("""1\t\t3\n""").tokenize()
-        expected = [Token(type="Int", value = 1), Token(type="Int", value = "3")]
+        expected = [Token(type="Int", value = 1), Token(type="Int", value = 3)]
         self.assertEqual(actual, expected)
 
     def test_newlines_between_tokens_are_removed(self): #???
         actual = Lexer("""1
         3\n""").tokenize()
-        expected = [Token(type="Int", value = 1), Token(type="Int", value = "3")]
+        expected = [Token(type="Int", value = 1), Token(type="Int", value = 3)]
         self.assertEqual(actual, expected)
 
     def test_assorted_space_characters_between_tokens_are_removed(self):

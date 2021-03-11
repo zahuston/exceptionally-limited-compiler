@@ -73,7 +73,7 @@ class Lexer:
 
     def parse_variable(self):
         variable_literal = ""
-        while self.position.char.isalpha():
+        while self.position.char.isalnum():
             variable_literal += self.position.char
             self.advance()
 
