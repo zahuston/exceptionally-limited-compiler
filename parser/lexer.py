@@ -1,4 +1,4 @@
-from .token import *
+from parser.token_jz import Token, OperatorToken, ControlToken
 from .position import Position
 import pdb
 
@@ -27,7 +27,7 @@ class Lexer:
                 tokens.append(self.parse_string_literal())
             elif self.position.char.isalpha():
                 tokens.append(self.parse_variable())
-            elif OperatorToken.is_valid_operator_token(self.position.char):
+            elif OperatorToken.is_operator_char(self.position.char):
                 tokens.append(self.parse_operator())
             elif self.position.char.isspace():
                 self.advance()
@@ -85,7 +85,7 @@ class Lexer:
     def parse_operator(self):
         string_literal = ''
 
-        while(OperatorToken.is_valid_operator_token(self.position.char)):
+        while(OperatorToken.is_operator_char(self.position.char)):
             string_literal += self.position.char
             self.advance()
 

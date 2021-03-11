@@ -1,11 +1,11 @@
-from .errors.invalid_token_error import InvalidTokenError
+from parser.errors.invalid_token_error import InvalidTokenError
 from enum import Enum
 
-
 CONTROL_TOKENS = ['if', 'elif', 'else', 'for', 'while', 'in', 'or', 'and']
-OPERATOR_CHARACTERS = ['=', '>', '<', '+', '-' '(', ')']
+OPERATOR_CHARACTERS = ['=', '>', '<', '+', '-', '(', ')', '!']
 
 TOKEN_TYPES = ['String', 'Int', 'Float', 'Variable', 'Operator', 'Control']
+
 
 class Token:
     def __init__(self, type, value = None):
@@ -24,12 +24,19 @@ class Token:
         objEqual = obj.value == self.value
         return isInstance and typeEqual and objEqual
 
+
 class ControlToken(Token):
     @staticmethod
     def is_valid_control_token(token_value):
         return token_value in CONTROL_TOKENS
 
+
 class OperatorToken(Token):
     @staticmethod
-    def is_valid_operator_token(token_value):
+    def is_operator_char(token_value):
         return token_value in OPERATOR_CHARACTERS
+
+    @staticmethod
+    def is_supported_operator(operator_string):
+        if len(operator_string) > 2:
+            raise Exception(f"Maximum operator length is 2 characters. {operator_string} is too much.")

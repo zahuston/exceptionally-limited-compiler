@@ -1,13 +1,17 @@
 import unittest   # The test framework
+import sys
+
+sys.path.append('../src')
+
 from parser.lexer import Lexer
-from parser.token import Token
+from parser.token_jz import Token
 '''
     individual token tests
     - entire number
     - entire string
     combined token tests
     - 5==4
-    - print("hello") --> 
+    - print("hello") -->
     spacing is removed
 '''
 class Test_Lexer(unittest.TestCase):
@@ -57,12 +61,17 @@ class Test_Lexer(unittest.TestCase):
     # Basic Variable Tests
     def test_single_variable_comes_out_as_1_token(self):
         actual = Lexer("""testVariable\n""").tokenize()
-        expected = [Token(type="Variable", value = "testVariable"), Token(type="Float", value = 2.5)]
+        expected = [Token(type="Variable", value = "testVariable")]
         self.assertListEqual(actual, expected)
 
     def test_multiple_variable_comes_out_as_2_token(self):
-        actual = Lexer("""testVariable1 testVariable2\n""").tokenize()
-        expected = [Token(type="Variable", value = "testVariable1"), Token(type="Variable", value = "testVariable2")]
+        actual = Lexer("""testVariableA testVariableB\n""").tokenize()
+        expected = [Token(type="Variable", value = "testVariableA"), Token(type="Variable", value = "testVariableB")]
+        self.assertListEqual(actual, expected)
+
+    def test_single_alphanumeric_variables(self):
+        actual = Lexer("""testVariable1\n""").tokenize()
+        expected = [Token(type="Variable", value = "testVariable1")]
         self.assertListEqual(actual, expected)
 
     # Basic Operator Tests
@@ -125,7 +134,7 @@ class Test_Lexer(unittest.TestCase):
 
     def test_assorted_space_characters_between_tokens_are_removed(self):
         actual = Lexer("""  1
-        3\t5  
+        3\t5
         \n""").tokenize()
         expected = [Token(type="Int", value = 1), Token(type="Int", value = "3"), Token(type="Int", value = "5")]
         self.assertEqual(actual, expected)
