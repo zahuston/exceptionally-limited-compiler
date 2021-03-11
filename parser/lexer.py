@@ -1,4 +1,5 @@
 from parser.token_jz import Token, OperatorToken, ControlToken
+from parser.errors.invalid_character_error import InvalidCharacterError
 from .position import Position
 import pdb
 
@@ -33,7 +34,7 @@ class Lexer:
                 self.advance()
             else:
                 self.advance()
-                print(f"Nothing implemented yet for current character ({self.position.char})")
+                raise InvalidCharacterError(f"Invalid character {self.position.char} found at row:{self.position.row} col:{self.position.col}")
 
         return tokens
 
