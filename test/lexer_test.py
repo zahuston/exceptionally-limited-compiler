@@ -175,6 +175,7 @@ class Test_Lexer(unittest.TestCase):
         actual = Lexer("""
         if 5==5:
             v = 5\n""").tokenize()
+
         expected = [Token(type="Control", value = "if"),
                     Token(type="Int", value = 5),
                     Token(type="Operator", value = "=="),
@@ -188,7 +189,7 @@ class Test_Lexer(unittest.TestCase):
     def test_conditional_expression(self):
         # Todo: should this throw an error?
         actual = Lexer("""
-        if5==5:
+        if 5==5:
             v = 5\n""").tokenize()
         expected = [Token(type="Control", value = "if"),
                     Token(type="Int", value = 5),
@@ -198,7 +199,7 @@ class Test_Lexer(unittest.TestCase):
                     Token(type="Variable", value = "v"),
                     Token(type="Operator", value = "="),
                     Token(type="Int", value = 5)]
-        self.assertEqual(True, False)
+        self.assertEqual(actual, expected)
 
 if __name__ == '__main__':
     unittest.main()
