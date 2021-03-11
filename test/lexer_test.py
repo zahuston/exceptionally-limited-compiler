@@ -60,6 +60,10 @@ class Test_Lexer(unittest.TestCase):
         expected = [Token(type="Float", value = 1.9), Token(type="Float", value = 2.5)]
         self.assertListEqual(actual, expected)
 
+    def test_no_infinite_floating_on(self):
+        with self.assertRaises(Exception):
+            Lexer("""1.9.1.3\n""").tokenize()
+
     # Basic Variable Tests
     def test_single_variable_comes_out_as_1_token(self):
         actual = Lexer("""testVariable\n""").tokenize()
@@ -141,22 +145,22 @@ class Test_Lexer(unittest.TestCase):
         actual = Lexer("""  1
         3\t5
         \n""").tokenize()
-        expected = [Token(type="Int", value = 1), Token(type="Int", value = "3"), Token(type="Int", value = "5")]
+        expected = [Token(type="Int", value = 1), Token(type="Int", value = 3), Token(type="Int", value = 5)]
         self.assertEqual(actual, expected)
 
     # Happy Path Common Cases
     def test_arithmetic_expression(self):
         actual = Lexer("""5+7\n""").tokenize()
-        expected = [Token(type="Operator", value = "+"), Token(type="Operator", value = "-")]
+        expected = [Token(type="Int", value = 5), Token(type="Operator", value = "+"), Token(type="Int", value = 7)]
         self.assertEqual(actual, expected)
 
     def test_arithmetic_assignment_expression(self):
         actual = Lexer("""testVar = 5 + 7\n""").tokenize()
         expected = [Token(type="Variable", value = "testVar"),
                     Token(type="Operator", value = "="),
-                    Token(type="Int", value = "5"),
+                    Token(type="Int", value = 5),
                     Token(type="Operator", value = "+"),
-                    Token(type="Int", value = "7")]
+                    Token(type="Int", value = 7)]
         self.assertEqual(actual, expected)
 
     def test_method_call(self):
@@ -172,13 +176,13 @@ class Test_Lexer(unittest.TestCase):
         if 5==5:
             v = 5\n""").tokenize()
         expected = [Token(type="Control", value = "if"),
-                    Token(type="Int", value = "5"),
+                    Token(type="Int", value = 5),
                     Token(type="Operator", value = "=="),
-                    Token(type="Int", value = "5"),
+                    Token(type="Int", value = 5),
                     Token(type="Operator", value = ":"),
                     Token(type="Variable", value = "v"),
                     Token(type="Operator", value = "="),
-                    Token(type="Int", value = "5")]
+                    Token(type="Int", value = 5)]
         self.assertEqual(actual, expected)
 
     def test_conditional_expression(self):
@@ -187,13 +191,13 @@ class Test_Lexer(unittest.TestCase):
         if5==5:
             v = 5\n""").tokenize()
         expected = [Token(type="Control", value = "if"),
-                    Token(type="Int", value = "5"),
+                    Token(type="Int", value = 5),
                     Token(type="Operator", value = "=="),
-                    Token(type="Int", value = "5"),
+                    Token(type="Int", value = 5),
                     Token(type="Operator", value = ":"),
                     Token(type="Variable", value = "v"),
                     Token(type="Operator", value = "="),
-                    Token(type="Int", value = "5")]
+                    Token(type="Int", value = 5)]
         self.assertEqual(True, False)
 
 if __name__ == '__main__':
