@@ -58,6 +58,10 @@ class Test_Lexer(unittest.TestCase):
         expected = [Token(type="Float", value = 1.9), Token(type="Float", value = 2.5)]
         self.assertListEqual(actual, expected)
 
+    def test_no_infinite_floating_on(self):
+        with self.assertRaises(Exception):
+            Lexer("""1.9.1.3\n""").tokenize()
+
     # Basic Variable Tests
     def test_single_variable_comes_out_as_1_token(self):
         actual = Lexer("""testVariable\n""").tokenize()

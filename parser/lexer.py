@@ -49,11 +49,23 @@ class Lexer:
         return True
 
     def parse_numeric(self):
+        numeric_string_archived = ''
         numeric_string = ''
-        while(self.position.char.isnumeric()):
+
+        while(self.position.char.isnumeric() or self.position.char == '.'):
+            if self.position.char == '.':
+                if numeric_string_archived != '':
+                    raise Exception("You're only allowed one dot in a number hooligan")
+                numeric_string_archived = numeric_string
+                numeric_string = ''
+
             numeric_string += self.position.char
             self.advance()
-        return Token("Int", int(numeric_string))
+
+        if numeric_string_archived:
+            return Token("Float", float(numeric_string_archived + numeric_string))
+        else:
+            return Token("Int", int(numeric_string))
 
     def parse_string_literal(self):
         string_literal = ""
