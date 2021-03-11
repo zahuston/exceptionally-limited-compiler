@@ -120,14 +120,14 @@ class Test_Lexer(unittest.TestCase):
         # actual = Lexer("""&$#\n""").tokenize()
         # expected = [Token(type="Operator", value = "+"), Token(type="Operator", value = "-")]
         # Todo: consider how we'd handle a non-alphanumeric non-keyword character
-        self.assertRaises(InvalidCharacterError, Lexer("""&$#\n""").tokenize())
+        with self.assertRaises(InvalidCharacterError):
+            Lexer("""&$#\n""").tokenize()
 
     # WhiteSpace
     def test_multiple_spaces_between_tokens_are_removed(self):
         actual = Lexer("""1    3\n""").tokenize()
         expected = [Token(type="Int", value = 1), Token(type="Int", value = 3)]
         self.assertEqual(actual, expected)
-        self.assertRaises(ValueError, self.isone.is_one, 2)
 
 
     def test_tabs_between_tokens_are_removed(self):
