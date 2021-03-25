@@ -1,0 +1,14 @@
+expr : term ((PLUS|MINUS) term)*
+
+method: variable
+
+body: (expr)*
+
+definition: def variable paren (variable)* paren colon
+
+       method
+definition   body
+           expr expr
+
+def is_operator_char(token_value):
+      return token_value in OPERATOR_CHARACTERS
